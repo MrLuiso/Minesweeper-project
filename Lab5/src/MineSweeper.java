@@ -8,9 +8,8 @@ public class MineSweeper {
 	
 	public Random randMachine;
 	
-	public boolean[][] fieldMines;
-	public boolean[][] triggeredSpaces;
-	public boolean[][] flaggedSpaces;
+	public Square[][] square;
+	
 	
 	public MineSweeper(){
 		
@@ -25,9 +24,7 @@ public class MineSweeper {
 		 * these values will change*/
 		for(int i = 0; i < width; i++){
 			for(int o = 0; o < height; o++){
-				fieldMines[i][o] = false;
-				triggeredSpaces[i][o] = false;
-				flaggedSpaces[i][o] = false;
+				square[i][o] = new Square(i, o);
 			}
 		}
 		
@@ -47,9 +44,9 @@ public class MineSweeper {
 			x = randMachine.nextInt(width);
 			y = randMachine.nextInt(height);
 			
-			if(!fieldMines[x][y]){
+			if(!square[x][y].getBomb()){
 				
-				fieldMines[x][y] = true;
+				square[x][y].placeBomb();
 				cont++;
 				
 			}
@@ -64,12 +61,9 @@ public class MineSweeper {
 	public void placeFlag(int x, int y){
 		
 		//TODO: add the or remove the flag drawing;
-		//TODO: only allow flags on not clicked spaces;
 		
-		if(flaggedSpaces[x][y]){
-			flaggedSpaces[x][y] = false;
-		} else{
-			flaggedSpaces[x][y] = true;
+		if(square[x][y].getUnclicked()){
+			square[x][y].toggleFlag();
 		}
 		
 	}//placeFlag()
@@ -80,16 +74,18 @@ public class MineSweeper {
 	 * if the position contains a bomb then the game is over.*/
 	public void stepInSpace(int x, int y){
 		
-		if(!flaggedSpaces[x][y] && fieldMines[x][y]){
+		square[x][y].click();
+		
+		if(!square[x][y].getFlagged() && square[x][y].getBomb()){
 			//User stepped in a mine
 			//TODO: add code to finish the game
 		} else{
-			checkAdjacentBombs();
+			checkAdjacentBombs(square[x][y]);
 		}
 	}//stepInSpace()
 	
-	public void checkAdjacentBombs(){
+	public void checkAdjacentBombs(Square sq){
 		
-	}
+	}//chackAdjacentBombs
 
 }
