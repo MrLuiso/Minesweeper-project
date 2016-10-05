@@ -66,6 +66,7 @@ public class MyMouseAdapter extends MouseAdapter {
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
 				//Had pressed outside
 				//Do nothing
+			
 			} else {
 				if ((gridX == -1) || (gridY == -1)) {
 					//Is releasing outside
