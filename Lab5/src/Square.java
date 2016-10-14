@@ -8,6 +8,8 @@ public class Square {
 	private int xPos;
 	private int yPos;
 	
+	private int adjacentBombs;
+	
 	public Square(int x, int y){
 		//default constructor;
 		flagged = false;
@@ -35,6 +37,10 @@ public class Square {
 		unclicked = false;
 	}//click()
 	
+	public void setAdjacentBombs(int bombs){
+		adjacentBombs = bombs;
+	}
+	
 	//////////////////*Getters*////////////////////////
 	
 	public boolean getBomb(){
@@ -56,6 +62,10 @@ public class Square {
 	public boolean getUnclicked(){
 		return unclicked;
 	}//getEmpty
+	
+	public int getAdjacentBombs(){
+		return adjacentBombs;
+	}
 	
 	
 }

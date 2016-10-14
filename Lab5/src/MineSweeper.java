@@ -9,6 +9,9 @@ public class MineSweeper {
 	public Random randMachine;
 	
 	public Square[][] square;
+	public int squareArrayWidth;
+	public int squareArrayHeight;
+	
 	
 	/*Constructor*/ 
 	public MineSweeper(){
@@ -17,7 +20,12 @@ public class MineSweeper {
 		width = 9;
 		height = 9;
 		
+		squareArrayWidth = width - 1;
+		squareArrayHeight = height - 1;
+		
 		mines = 9;
+		
+		square = new Square[9][9]; 
 		
 		/*this loop initializes a new field
 		 * as the bombs are placed and later the user plays:
@@ -25,6 +33,7 @@ public class MineSweeper {
 		for(int i = 0; i < width; i++){
 			for(int o = 0; o < height; o++){
 				square[i][o] = new Square(i, o);
+				System.out.println("initialized square in: " + i + o);
 			}
 		}
 		
@@ -41,8 +50,8 @@ public class MineSweeper {
 		 * the counter only increments when a new mine has been placed
 		 * this makes sure that all the mines have been placed in different positions*/
 		while(cont < mines){
-			x = randMachine.nextInt(width);
-			y = randMachine.nextInt(height);
+			x = randMachine.nextInt(width - 1);
+			y = randMachine.nextInt(height - 1);
 			
 			if(!square[x][y].getBomb()){
 				
@@ -62,6 +71,7 @@ public class MineSweeper {
 		
 		if(square[x][y].getUnclicked()){
 			square[x][y].toggleFlag();
+			System.out.println("flag on " + x + " " + y);
 			//TODO: add or remove the flag drawing;
 		}
 		
@@ -81,14 +91,19 @@ public class MineSweeper {
 			if(square[x][y].getBomb()){
 				//User stepped in a mine
 				//TODO: add code to finish the game
+				System.out.println("game over");
 				
 			} else{
 				checkAdjacentBombs(square[x][y]);
+				System.out.println("AdjacentBombs = " + square[x][y].getAdjacentBombs());
 			}	
 		} 
 	}//stepInSpace()
 	
+	
 	public void checkAdjacentBombs(Square sq){
+		
+		System.out.println("woop");
 		
 		int x = sq.getXPos();
 		int y = sq.getYPos();
@@ -97,7 +112,8 @@ public class MineSweeper {
 		
 		int adjacentBombs = 0;
 		
-		if(x > 0 && x < this.width && y > 0 && y < this.height){
+		if(x > 0 && x < squareArrayWidth && y > 0 && y < squareArrayHeight){
+			descriptivePos = 0;
 			if(square[x - 1][y - 1].getBomb()){
 				adjacentBombs++;
 			}
@@ -122,7 +138,7 @@ public class MineSweeper {
 			if(square[x - 1][y].getBomb()){
 				adjacentBombs++;
 			}
-		} else if(x == 0 && y > 0 && y < this.height){
+		} else if(x == 0 && y > 0 && y < squareArrayHeight){
 			//on left edge = 1
 			descriptivePos = 1;
 			
@@ -141,7 +157,7 @@ public class MineSweeper {
 			if(square[x][y + 1].getBomb()){
 				adjacentBombs++;
 			}
-		} else if(x == 9 && y > 0 && y < 9){
+		} else if(x == squareArrayWidth && y > 0 && y < squareArrayHeight){
 			//on right edge = 2
 			descriptivePos = 2;
 			
@@ -160,7 +176,7 @@ public class MineSweeper {
 			if(square[x - 1][y].getBomb()){
 				adjacentBombs++;
 			}
-		} else if(x > 0 && x < 9 && y == 0){
+		} else if(x > 0 && x < squareArrayWidth && y == squareArrayHeight){
 			//on top edge = 3
 			descriptivePos = 3;
 			
@@ -179,7 +195,7 @@ public class MineSweeper {
 			if(square[x - 1][y].getBomb()){
 				adjacentBombs++;
 			}
-		} else if(x > 0 && x < 9 && y == 9){
+		} else if(x > 0 && x < squareArrayWidth && y == squareArrayHeight){
 			//on bottom edge = 4
 			descriptivePos = 4;
 			
@@ -211,7 +227,7 @@ public class MineSweeper {
 			if(square[x][y + 1].getBomb()){
 				adjacentBombs++;
 			}
-		} else if(x == 9 && y == 9){
+		} else if(x == squareArrayWidth && y == squareArrayHeight){
 			//on bottom right corner = 6
 			descriptivePos = 6;
 			
@@ -224,7 +240,7 @@ public class MineSweeper {
 			if(square[x - 1][y].getBomb()){
 				adjacentBombs++;
 			}
-		} else if(x == 0 && y == 9){
+		} else if(x == 0 && y == squareArrayHeight){
 			//on bottom left corner = 7
 			descriptivePos = 7;
 			
@@ -237,7 +253,7 @@ public class MineSweeper {
 			if(square[x + 1][y].getBomb()){
 				adjacentBombs++;
 			}
-		} else if(x == 9 && y == 0){
+		} else if(x == squareArrayWidth && y == 0){
 			//on top right corner = 8
 			descriptivePos = 8;
 			
@@ -330,6 +346,7 @@ public class MineSweeper {
 			
 		} else{
 			//TODO: add the number to the square
+			square[x][y].setAdjacentBombs(adjacentBombs);
 			return;
 		}
 		
