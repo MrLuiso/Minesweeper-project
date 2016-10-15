@@ -83,8 +83,6 @@ public class MineSweeper {
 	 */
 	public void stepInSpace(int x, int y) {
 
-		square[x][y].click();
-
 		/* if the user used a flag on that space, ignore the click */
 		if (!square[x][y].getFlagged()) {
 
@@ -95,218 +93,306 @@ public class MineSweeper {
 
 			} else {
 				checkAdjacentBombs(square[x][y]);
-				System.out.println("AdjacentBombs = " + square[x][y].getAdjacentBombs());
 			}
 		}
 	}// stepInSpace()
 
 	public void checkAdjacentBombs(Square sq) {
+		
+		
 
 		System.out.println("woop");
+		if (sq.getUnclicked()) {
+			
+			sq.click();
+			
+			int x = sq.getXPos();
+			int y = sq.getYPos();
+			System.out.println("coordenates in loop: " + x + " " + y);
+			
+			int adjacentBombs = 0;
 
-		int x = sq.getXPos();
-		int y = sq.getYPos();
-		
-		int adjacentBombs = 0;
+			int descriptiveXPos = 0;
+			int descriptiveYPos = 0;
 
-		int descriptiveXPos = 0;
-		int descriptiveYPos = 0;
+			int descriptivePos = 0;
 
-		switch (x) {
+			switch (x) {
 
-		case 0:
-			//left edge
-			descriptiveXPos = 1;
-			break;
+			case 0:
+				// left edge
+				descriptiveXPos = 1;
+				break;
 
-		case 8:
-			//right edge
-			descriptiveXPos = 2;
-			break;
+			case 8:
+				// right edge
+				descriptiveXPos = 2;
+				break;
 
-		default:
-			//middle
-			descriptiveXPos = 0;
-			break;
+			default:
+				// middle
+				descriptiveXPos = 0;
+				break;
+
+			}
+
+			switch (y) {
+
+			case 0:
+				// top edge
+				descriptiveYPos = 1;
+				break;
+
+			case 8:
+				// bottom edge
+				descriptiveYPos = 2;
+				break;
+
+			default:
+				// middle
+				descriptiveYPos = 0;
+				break;
+
+			}
+
+			if (descriptiveXPos == 0 && descriptiveYPos == 0) {
+				// in middle
+				System.out.println("middle");
+				if (square[x - 1][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+			} else if (descriptiveXPos == 1 && descriptiveYPos == 0) {
+				// on left edge
+				descriptivePos = 1;
+				System.out.println("left edge");
+				if (square[x][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+			} else if (descriptiveXPos == 2 && descriptiveYPos == 0) {
+				// on right edge
+				descriptivePos = 2;
+				System.out.println("right edge");
+				if (square[x - 1][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+			} else if (descriptiveXPos == 0 && descriptiveYPos == 1) {
+				// on top edge
+				descriptivePos = 3;
+				System.out.println("top edge");
+				if (square[x + 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+			} else if (descriptiveXPos == 0 && descriptiveYPos == 2) {
+				// on bottom edge
+				descriptivePos = 4;
+				System.out.println("bottom edge");
+				if (square[x - 1][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+			} else if (descriptiveXPos == 1 && descriptiveYPos == 1) {
+				// top left corner
+				descriptivePos = 5;
+				System.out.println("top left corner");
+				if (square[x + 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+			} else if (descriptiveXPos == 2 && descriptiveYPos == 1) {
+				// top right corner
+				descriptivePos = 6;
+				System.out.println("top rigth corner");
+				if (square[x][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y + 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+			} else if (descriptiveXPos == 2 && descriptiveYPos == 2) {
+				// bottom right corner
+				descriptivePos = 7;
+				System.out.println("bottom right corner");
+				if (square[x - 1][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x - 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+			} else if (descriptiveXPos == 1 && descriptiveYPos == 2) {
+				// bottom left corner
+				descriptivePos = 8;
+				System.out.println("bottom left corner");
+				if (square[x][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y - 1].getBomb()) {
+					adjacentBombs++;
+				}
+				if (square[x + 1][y].getBomb()) {
+					adjacentBombs++;
+				}
+			}
+
+			if (adjacentBombs == 0) {
+				// Recursive Caution
+				switch (descriptivePos) {
+				case 0:
+					// in middle field
+					checkAdjacentBombs(square[x - 1][y - 1]);
+					checkAdjacentBombs(square[x][y - 1]);
+					checkAdjacentBombs(square[x + 1][y - 1]);
+					checkAdjacentBombs(square[x + 1][y]);
+					checkAdjacentBombs(square[x + 1][y + 1]);
+					checkAdjacentBombs(square[x][y + 1]);
+					checkAdjacentBombs(square[x - 1][y + 1]);
+					checkAdjacentBombs(square[x - 1][y]);
+
+				case 1:
+					// on left edge
+					checkAdjacentBombs(square[x][y - 1]);
+					checkAdjacentBombs(square[x + 1][y - 1]);
+					checkAdjacentBombs(square[x + 1][y]);
+					checkAdjacentBombs(square[x + 1][y + 1]);
+					checkAdjacentBombs(square[x][y + 1]);
+
+				case 2:
+					// on right edge
+					checkAdjacentBombs(square[x - 1][y - 1]);
+					checkAdjacentBombs(square[x][y - 1]);
+					checkAdjacentBombs(square[x][y + 1]);
+					checkAdjacentBombs(square[x - 1][y + 1]);
+					checkAdjacentBombs(square[x - 1][y]);
+
+				case 3:
+					// on top edge
+					checkAdjacentBombs(square[x - 1][y]);
+					checkAdjacentBombs(square[x - 1][y + 1]);
+					checkAdjacentBombs(square[x][y + 1]);
+					checkAdjacentBombs(square[x + 1][y + 1]);
+					checkAdjacentBombs(square[x + 1][y]);
+
+				case 4:
+					// on bottom edge
+					checkAdjacentBombs(square[x - 1][y - 1]);
+					checkAdjacentBombs(square[x][y - 1]);
+					checkAdjacentBombs(square[x + 1][y - 1]);
+					checkAdjacentBombs(square[x + 1][y]);
+					checkAdjacentBombs(square[x - 1][y]);
+
+				case 5:
+					// on top left corner
+					checkAdjacentBombs(square[x + 1][y]);
+					checkAdjacentBombs(square[x + 1][y + 1]);
+					checkAdjacentBombs(square[x][y + 1]);
+
+				case 6:
+					// on top right corner
+					checkAdjacentBombs(square[x - 1][y]);
+					checkAdjacentBombs(square[x - 1][y + 1]);
+					checkAdjacentBombs(square[x][y + 1]);
+
+				case 7:
+					// on bottom right corner
+					checkAdjacentBombs(square[x][y - 1]);
+					checkAdjacentBombs(square[x - 1][y - 1]);
+					checkAdjacentBombs(square[x - 1][y]);
+
+				case 8:
+
+					// on bottom left corner
+					checkAdjacentBombs(square[x][y - 1]);
+					checkAdjacentBombs(square[x + 1][y - 1]);
+					checkAdjacentBombs(square[x + 1][y]);
+
+				}
+
+			} else {
+				// Put number in cell
+				square[x][y].setAdjacentBombs(adjacentBombs);
+				System.out.println("AdjacentBombs = "  + adjacentBombs);
+				return;
+			}
 
 		}
-
-		switch (y) {
-
-		case 0:
-			//top edge
-			descriptiveYPos = 1;
-			break;
-
-		case 8:
-			//bottom edge
-			descriptiveYPos = 2;
-			break;
-
-		default:
-			//middle
-			descriptiveYPos = 0;
-			break;
-
-		}
-		
-		
-		if(descriptiveXPos == 0 && descriptiveYPos == 0){
-			//in middle
-			System.out.println("middle");
-			if(square[x - 1][y - 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y -1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y - 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y].getBomb()){
-				adjacentBombs++;
-			}
-		} else if(descriptiveXPos == 1 && descriptiveYPos == 0){
-			//on left edge
-			System.out.println("left edge");
-			if(square[x][y -1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y - 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-		} else if(descriptiveXPos == 2 && descriptiveYPos == 0){
-			//on right edge
-			System.out.println("right edge");
-			if(square[x - 1][y - 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y -1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y].getBomb()){
-				adjacentBombs++;
-			}
-		} else if(descriptiveXPos == 0 && descriptiveYPos == 1){
-			//on top edge
-			System.out.println("top edge");
-			if(square[x + 1][y].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y].getBomb()){
-				adjacentBombs++;
-			}
-		} else if(descriptiveXPos == 0 && descriptiveYPos == 2){
-			//on bottom edge
-			System.out.println("bottom edge");
-			if(square[x - 1][y - 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y -1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y - 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y].getBomb()){
-				adjacentBombs++;
-			}
-		} else if(descriptiveXPos == 1 && descriptiveYPos == 1){
-			//top left corner
-			System.out.println("top left corner");
-			if(square[x + 1][y].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-		} else if(descriptiveXPos == 2 && descriptiveYPos == 1){
-			//top right corner
-			System.out.println("top rigth corner");
-			if(square[x][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y + 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y].getBomb()){
-				adjacentBombs++;
-			}
-		} else if(descriptiveXPos == 2 && descriptiveYPos == 2){
-			//bottom right corner
-			System.out.println("bottom right corner");
-			if(square[x - 1][y - 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x][y -1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x - 1][y].getBomb()){
-				adjacentBombs++;
-			}
-		} else if(descriptiveXPos == 1 && descriptiveYPos == 2){
-			//bottom left corner
-			System.out.println("bottom left corner");
-			if(square[x][y -1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y - 1].getBomb()){
-				adjacentBombs++;
-			}
-			if(square[x + 1][y].getBomb()){
-				adjacentBombs++;
-			}
-		}
-		
-		if(adjacentBombs == 0){
-			//Recursive Caution
-		}
-		
-		System.out.println("Adjacent Bombs = " + adjacentBombs);
-		
-		
 
 	}// chackAdjacentBombs
 

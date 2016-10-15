@@ -10,6 +10,8 @@ public class Square {
 	
 	private int adjacentBombs;
 	
+	private int color;
+	
 	public Square(int x, int y){
 		//default constructor;
 		flagged = false;
@@ -24,17 +26,24 @@ public class Square {
 	public void toggleFlag(){
 		if(flagged){
 			flagged = false;
+			color = 3; //color to white
 		} else{
 			flagged = true;
+			color = 1; //color to red
 		}
 	}//toggleFlag()
 	
 	public void placeBomb(){
 		mined = true;
+		color = 0; //color to black
 	}//placeBomb()
 	
 	public void click(){
 		unclicked = false;
+		if(!this.getBomb()){
+			color = 2; //color to grey
+		}
+		
 	}//click()
 	
 	public void setAdjacentBombs(int bombs){
@@ -65,6 +74,10 @@ public class Square {
 	
 	public int getAdjacentBombs(){
 		return adjacentBombs;
+	}
+	
+	public int getColor(){
+		return color;
 	}
 	
 	
