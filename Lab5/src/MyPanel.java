@@ -16,7 +16,7 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
-	public Number[][] numberArray = new Number[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int[][] numberArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	
 	public Graphics g;
@@ -81,11 +81,57 @@ public class MyPanel extends JPanel {
 				if ((x == 0) || (y != TOTAL_ROWS)) {
 					Color c = colorArray[x][y];
 					g.setColor(c);
-					Number z1 = numberArray[x][y];
+					int z1 = numberArray[x][y];
 					
 					g.fill3DRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE,true);
-					g.setColor(Color.BLUE);
-					g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+					
+					switch(z1){
+					case 0:
+						break;
+						
+					case 1:
+						g.setColor(Color.BLUE);
+						g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+						break;
+						
+					case 2:
+						g.setColor(Color.CYAN);
+						g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+						break;
+						
+					case 3:
+						g.setColor(Color.GREEN);
+						g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+						break;
+						
+					case 4:
+						g.setColor(Color.ORANGE);
+						g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+						break;
+						
+					case 5:
+						g.setColor(Color.RED);
+						g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+						break;
+						
+					case 6:
+						g.setColor(Color.MAGENTA);
+						g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+						break;
+					
+					case 7:
+						g.setColor(Color.YELLOW);
+						g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+						break;
+						
+					case 8:
+						g.setColor(Color.BLACK);
+						g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
+						break;
+					}
+					
+					
+					
 				}
 			}
 		}

@@ -4,6 +4,7 @@ public class Square {
 	private boolean flagged;
 	private boolean mined;
 	private boolean unclicked;
+	private boolean checked;
 	
 	private int xPos;
 	private int yPos;
@@ -17,6 +18,7 @@ public class Square {
 		flagged = false;
 		mined = false;
 		unclicked = true;
+		checked = true;
 		adjacentBombs = 0;
 		
 		color = 3;
@@ -46,8 +48,17 @@ public class Square {
 		if(!this.getBomb()){
 			color = 2; //color to grey
 		} else{
-			color = 0; //color to black
+			color = 0;
 		}
+		
+	}//click()
+	
+	public void check(){
+		checked = false;
+		if(!this.getBomb()){
+			color = 2; //color to grey
+		} 
+		
 		
 	}//click()
 	
@@ -76,6 +87,10 @@ public class Square {
 	public boolean getUnclicked(){
 		return unclicked;
 	}//getEmpty
+	
+	public boolean getUnchecked(){
+		return checked;
+	}
 	
 	public int getAdjacentBombs(){
 		return adjacentBombs;

@@ -11,6 +11,9 @@ public class MineSweeper {
 	public Square[][] square;
 	public int squareArrayWidth;
 	public int squareArrayHeight;
+	
+	public boolean win;
+	public boolean lose;
 
 	/* Constructor */
 	public MineSweeper() {
@@ -25,6 +28,9 @@ public class MineSweeper {
 		mines = 9;
 
 		square = new Square[9][9];
+		
+		win = false;
+		lose = false;
 
 		/*
 		 * this loop initializes a new field as the bombs are placed and later
@@ -72,7 +78,6 @@ public class MineSweeper {
 		if (square[x][y].getUnclicked()) {
 			square[x][y].toggleFlag();
 			System.out.println("flag on " + x + " " + y);
-			// TODO: add or remove the flag drawing;
 		}
 
 	}// placeFlag()
@@ -88,7 +93,7 @@ public class MineSweeper {
 
 			if (square[x][y].getBomb()) {
 				// User stepped in a mine
-				// TODO: add code to finish the game
+				this.lose = true;
 				square[x][y].click();
 				System.out.println("game over");
 
@@ -96,16 +101,28 @@ public class MineSweeper {
 				checkAdjacentBombs(square[x][y]);
 			}
 		}
+		
+		
 	}// stepInSpace()
+	
+	public boolean checkWin(){
+		return win;
+	}
+	
+	public boolean checkLose(){
+		return this.lose;
+	}
+	
+	
 
 	public void checkAdjacentBombs(Square sq) {
 		
 		
 
 		System.out.println("woop");
-		if (sq.getUnclicked()) {
+		if (sq.getUnchecked()) {
 			
-			sq.click();
+			sq.check();
 			
 			int x = sq.getXPos();
 			int y = sq.getYPos();
@@ -116,9 +133,7 @@ public class MineSweeper {
 			int c = y - 1;
 			int d = y + 1;
 			
-			if(a == -1 || b == 9 || c == -1 || d == 9){
-				return;
-			}
+			
 			
 			int adjacentBombs = 0;
 
@@ -323,6 +338,16 @@ public class MineSweeper {
 			}
 			
 			
+			if(adjacentBombs > 0){
+				// Put number in cell
+				square[x][y].setAdjacentBombs(adjacentBombs);
+				System.out.println("AdjacentBombs = "  + adjacentBombs);
+				return;
+			}
+			
+			if(a == -1 || b == 9 || c == -1 || d == 9){
+				return;
+			}
 
 			if (adjacentBombs == 0) {
 				// Recursive Caution
@@ -397,12 +422,7 @@ public class MineSweeper {
 
 				}
 
-			} else {
-				// Put number in cell
-				square[x][y].setAdjacentBombs(adjacentBombs);
-				System.out.println("AdjacentBombs = "  + adjacentBombs);
-				return;
-			}
+			} 
 
 		}
 

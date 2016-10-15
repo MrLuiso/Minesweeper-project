@@ -72,14 +72,7 @@ public class MyMouseAdapter extends MouseAdapter {
 			}
 		}
 		JFrame myFrame = (JFrame) c;
-		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0); // Can
-																				// also
-																				// loop
-																				// among
-																				// components
-																				// to
-																				// find
-																				// MyPanel
+		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0); 
 		Insets myInsets = myFrame.getInsets();
 		int x1 = myInsets.left;
 		int y1 = myInsets.top;
@@ -112,6 +105,16 @@ public class MyMouseAdapter extends MouseAdapter {
 						myGame.stepInSpace(gridX, gridY);
 						stateSquare(gridX, gridY, myGame.square[gridX][gridY].getColor(), e);
 						stateNumber(gridX, gridY, myGame.square[gridX][gridY].getAdjacentBombs(), e);
+						
+						if(myGame.checkLose()){
+							for(int i = 0; i < 9; i++){
+								for(int o = 0; o < 9; o++){
+									if(myGame.square[i][o].getBomb()){
+										stateSquare(i, o, myGame.square[i][o].getColor(), e);
+									}
+								}
+							}
+						}
 
 					}
 				}
@@ -242,5 +245,6 @@ public class MyMouseAdapter extends MouseAdapter {
 		myPanel.numberArray[x][y] = number;
 		myPanel.repaint();
 	}
+	
 
 }
