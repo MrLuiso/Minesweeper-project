@@ -89,6 +89,7 @@ public class MineSweeper {
 			if (square[x][y].getBomb()) {
 				// User stepped in a mine
 				// TODO: add code to finish the game
+				square[x][y].click();
 				System.out.println("game over");
 
 			} else {
@@ -109,6 +110,15 @@ public class MineSweeper {
 			int x = sq.getXPos();
 			int y = sq.getYPos();
 			System.out.println("coordenates in loop: " + x + " " + y);
+			
+			int a = x - 1;
+			int b = x + 1;
+			int c = y - 1;
+			int d = y + 1;
+			
+			if(a == -1 || b == 9 || c == -1 || d == 9){
+				return;
+			}
 			
 			int adjacentBombs = 0;
 
@@ -311,6 +321,8 @@ public class MineSweeper {
 					adjacentBombs++;
 				}
 			}
+			
+			
 
 			if (adjacentBombs == 0) {
 				// Recursive Caution

@@ -18,6 +18,8 @@ public class Square {
 		mined = false;
 		unclicked = true;
 		
+		color = 3;
+		
 		xPos = x;
 		yPos = y;
 	}//constructor
@@ -35,13 +37,15 @@ public class Square {
 	
 	public void placeBomb(){
 		mined = true;
-		color = 0; //color to black
+		
 	}//placeBomb()
 	
 	public void click(){
 		unclicked = false;
 		if(!this.getBomb()){
 			color = 2; //color to grey
+		} else{
+			color = 0; //color to black
 		}
 		
 	}//click()

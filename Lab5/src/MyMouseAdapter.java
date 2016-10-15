@@ -70,8 +70,15 @@ public class MyMouseAdapter extends MouseAdapter {
 				return;
 			}
 		}
-		JFrame myFrame = (JFrame)c;
-		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
+		JFrame myFrame = (JFrame) c;
+		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0); // Can
+																				// also
+																				// loop
+																				// among
+																				// components
+																				// to
+																				// find
+																				// MyPanel
 		Insets myInsets = myFrame.getInsets();
 		int x1 = myInsets.left;
 		int y1 = myInsets.top;
@@ -83,100 +90,100 @@ public class MyMouseAdapter extends MouseAdapter {
 		int gridX = myPanel.getGridX(x, y);
 		int gridY = myPanel.getGridY(x, y);
 		switch (e.getButton()) {
-		case 1:		//Left mouse button
-			
+		case 1: // Left mouse button
+
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
-				//Had pressed outside
-				//Do nothing
-			//d 
+				// Had pressed outside
+				// Do nothing
+				// d
 			} else {
 				if ((gridX == -1) || (gridY == -1)) {
-					//Is releasing outside
-					//Do nothing
+					// Is releasing outside
+					// Do nothing
 				} else {
 					if ((myPanel.mouseDownGridX != gridX) || (myPanel.mouseDownGridY != gridY)) {
-						//Released the mouse button on a different cell where it was pressed
-						//Do nothing
+						// Released the mouse button on a different cell where
+						// it was pressed
+						// Do nothing
 					} else {
-						//Released the mouse button on the same cell where it was pressed
-						System.out.println("gridValues " + gridX + " " +  gridY);
+						// Released the mouse button on the same cell where it
+						// was pressed
+						System.out.println("gridValues " + gridX + " " + gridY);
 						myGame.stepInSpace(gridX, gridY);
 						stateSquare(gridX, gridY, myGame.square[gridX][gridY].getColor(), e);
-						
-						
-						
+
 					}
 				}
 			}
 			myPanel.repaint();
 			break;
-		case 3:		//Right mouse button
-	
+		case 3: // Right mouse button
+
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
-				//Had pressed outside
-				//Do nothing
-			//d 
+				// Had pressed outside
+				// Do nothing
+				// d
 			} else {
 				if ((gridX == -1) || (gridY == -1)) {
-					//Is releasing outside
-					//Do nothing
+					// Is releasing outside
+					// Do nothing
 				} else {
 					if ((myPanel.mouseDownGridX != gridX) || (myPanel.mouseDownGridY != gridY)) {
-						//Released the mouse button on a different cell where it was pressed
-						//Do nothing
+						// Released the mouse button on a different cell where
+						// it was pressed
+						// Do nothing
 					} else {
 						if ((myPanel.mouseDownGridX != gridX) || (myPanel.mouseDownGridY != gridY)) {
-					}
-						//Released the mouse button on a different cell where it was pressed
-						//Do nothing
-					 else {
-				
-						//Released the mouse button on the same cell where it was pressed
-						 
-						myGame.placeFlag(gridX, gridY);
-						
-						stateSquare(gridX, gridY, myGame.square[gridX][gridY].getColor(), e);
-						 
-						
-					
+						}
+						// Released the mouse button on a different cell where
+						// it was pressed
+						// Do nothing
+						else {
+
+							// Released the mouse button on the same cell where
+							// it was pressed
+
+							myGame.placeFlag(gridX, gridY);
+
+							stateSquare(gridX, gridY, myGame.square[gridX][gridY].getColor(), e);
+
+						}
 					}
 				}
 			}
-		}
 			myPanel.repaint();
 			break;
-			
-		default:    //Some other button (2 = Middle mouse button, etc.)
-			//Do nothing
+
+		default: // Some other button (2 = Middle mouse button, etc.)
+			// Do nothing
 			break;
 		}
 	}
-	public void stateSquare(int x, int y ,int color, MouseEvent e){
-		
-		
-		
-//		int Bomb = 0;
-//		int Flag = 1;
-//		int blank = 2;
-		
+
+	public void stateSquare(int x, int y, int color, MouseEvent e) {
+
+		// int Bomb = 0;
+		// int Flag = 1;
+		// int blank = 2;
+
 		Color newColor = null;
-		
+
 		switch (color) {
 		case 0:
 			newColor = Color.BLACK;
-		break;
-	case 1:
+			break;
+		case 1:
 			newColor = Color.RED;
-		break;
-	case 2:
+			break;
+		case 2:
 			newColor = Color.lightGray;
-		break;
-		
-	case 3:
-		newColor = Color.WHITE;
-		break;
-	}
-		
+			break;
+
+		case 3:
+			newColor = Color.WHITE;
+			break;
+		}
+
 		Component c = e.getComponent();
 		while (!(c instanceof JFrame)) {
 			c = c.getParent();
@@ -184,11 +191,40 @@ public class MyMouseAdapter extends MouseAdapter {
 				return;
 			}
 		}
-		JFrame myFrame = (JFrame)c;
-		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
-	
+		JFrame myFrame = (JFrame) c;
+		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0); // Can
+																				// also
+																				// loop
+																				// among
+																				// components
+																				// to
+																				// find
+																				// MyPanel
+
+		for (int i = 0; i < 9; i++) {
+			for (int o = 0; o < 9; o++) {
+
+				switch (myGame.square[i][o].getColor()) {
+				case 0:
+					myPanel.colorArray[i][o] = Color.BLACK;
+					break;
+				case 1:
+					myPanel.colorArray[i][o] = Color.RED;
+					break;
+				case 2:
+					myPanel.colorArray[i][o] = Color.lightGray;
+					break;
+
+				case 3:
+					myPanel.colorArray[i][o] = Color.WHITE;
+					break;
+				}
+
+			}
+		}
+
 		myPanel.colorArray[x][y] = newColor;
-		myPanel.repaint();	
+		myPanel.repaint();
 	}
-	
+
 }
