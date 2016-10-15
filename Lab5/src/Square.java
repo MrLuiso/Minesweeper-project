@@ -17,6 +17,7 @@ public class Square {
 		flagged = false;
 		mined = false;
 		unclicked = true;
+		adjacentBombs = 0;
 		
 		color = 3;
 		

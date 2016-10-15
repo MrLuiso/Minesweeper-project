@@ -16,7 +16,11 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
+	public Number[][] numberArray = new Number[TOTAL_COLUMNS][TOTAL_ROWS];
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
+	
+	public Graphics g;
+	
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -31,12 +35,16 @@ public class MyPanel extends JPanel {
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				colorArray[x][y] = Color.WHITE;
+				numberArray[x][y] = 0;
 			}
 		}
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		this.g = g;
 
+		
 		//Compute interior coordinates
 		Insets myInsets = getInsets();
 		int x1 = myInsets.left;
@@ -73,7 +81,11 @@ public class MyPanel extends JPanel {
 				if ((x == 0) || (y != TOTAL_ROWS)) {
 					Color c = colorArray[x][y];
 					g.setColor(c);
+					Number z1 = numberArray[x][y];
+					
 					g.fill3DRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE,true);
+					g.setColor(Color.BLUE);
+					g.drawString(z1 + "",(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1) + 9,y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1 + 15);
 				}
 			}
 		}

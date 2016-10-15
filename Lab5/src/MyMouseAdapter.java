@@ -63,6 +63,7 @@ public class MyMouseAdapter extends MouseAdapter {
 	}
 
 	public void mouseReleased(MouseEvent e) {
+		
 		Component c = e.getComponent();
 		while (!(c instanceof JFrame)) {
 			c = c.getParent();
@@ -108,9 +109,9 @@ public class MyMouseAdapter extends MouseAdapter {
 					} else {
 						// Released the mouse button on the same cell where it
 						// was pressed
-						System.out.println("gridValues " + gridX + " " + gridY);
 						myGame.stepInSpace(gridX, gridY);
 						stateSquare(gridX, gridY, myGame.square[gridX][gridY].getColor(), e);
+						stateNumber(gridX, gridY, myGame.square[gridX][gridY].getAdjacentBombs(), e);
 
 					}
 				}
@@ -192,15 +193,8 @@ public class MyMouseAdapter extends MouseAdapter {
 			}
 		}
 		JFrame myFrame = (JFrame) c;
-		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0); // Can
-																				// also
-																				// loop
-																				// among
-																				// components
-																				// to
-																				// find
-																				// MyPanel
-
+		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0); 
+		
 		for (int i = 0; i < 9; i++) {
 			for (int o = 0; o < 9; o++) {
 
@@ -224,6 +218,28 @@ public class MyMouseAdapter extends MouseAdapter {
 		}
 
 		myPanel.colorArray[x][y] = newColor;
+		myPanel.repaint();
+	}
+
+	public void stateNumber(int x, int y, int number, MouseEvent e) {
+
+
+		Component c = e.getComponent();
+		while (!(c instanceof JFrame)) {
+			c = c.getParent();
+			if (c == null) {
+				return;
+			}
+		}
+		JFrame myFrame = (JFrame) c;
+		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);
+
+		for(int i = 0; i < 9; i++){
+			for(int o = 0; o < 9; o++){
+				myPanel.numberArray[i][o] = myGame.square[i][o].getAdjacentBombs();
+			}
+		}
+		myPanel.numberArray[x][y] = number;
 		myPanel.repaint();
 	}
 
